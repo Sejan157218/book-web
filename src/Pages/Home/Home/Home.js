@@ -1,24 +1,27 @@
-
-import React from 'react';
-import Authors from '../Authors/Authors';
-import Banner from '../Banner/Banner';
-import RecentView from '../RecentView/RecentView';
-import ShowBookHome from '../ShowBookHome/ShowBookHome';
-import ShowBookHome2 from '../ShowBookHome2/ShowBookHome2';
-import ShowBookHome3 from '../ShowBookHome3/ShowBookHome3';
+import React from "react";
+import useAuth from "../../../hook/useAuth";
+import Authors from "../Authors/Authors";
+import Banner from "../Banner/Banner";
+import RecentView from "../RecentView/RecentView";
+import ShowBookHome from "../ShowBookHome/ShowBookHome";
 
 const Home = () => {
-    return (
-        <>
-           <Banner></Banner>
-           <ShowBookHome></ShowBookHome>
-           <ShowBookHome2></ShowBookHome2>
-           <ShowBookHome3></ShowBookHome3>
-           <Authors></Authors>
-           <RecentView></RecentView>
-      
-        </>
-    );
+  const { allData } = useAuth();
+  const adventure = allData.filter(
+    (item) => item.category.title === "Adventure"
+  );
+  const Drama = allData.filter((item) => item.category.title === "Drama");
+  const Thriller = allData.filter((item) => item.category.title === "Thriller");
+  return (
+    <>
+      <Banner></Banner>
+      <ShowBookHome items={adventure} title={"Adventure"}></ShowBookHome>
+      <ShowBookHome items={Drama} title={"Drama"}></ShowBookHome>
+      <Authors></Authors>
+      <ShowBookHome items={Thriller} title={"Thriller"}></ShowBookHome>
+      {/* <RecentView></RecentView> */}
+    </>
+  );
 };
 
 export default Home;

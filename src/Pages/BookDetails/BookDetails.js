@@ -1,65 +1,92 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useAuth from "../../hook/useAuth";
 
 const BookDetails = () => {
-    return (
-        <div className='my-5'>
-            <div class = "card-wrapper">
-  <div class = "card">
-    {/* <!-- card left --> */}
-    <div class = "product-imgs">
-      <div class = "img-display">
-        <div class = "img-showcase">
-          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt = "shoe image" />
-    
+  const [book, setBook] = useState({});
+  const { URl } = useAuth();
+  const { id } = useParams();
+  useEffect(() => {
+    fetch(`${URl}/details/${id}/`)
+      .then((res) => res.json())
+      .then((data) => setBook(data));
+  }, [URl, id]);
+  console.log("id", id);
+  console.log("book", book);
+  return (
+    <div className="my-5">
+      <div class="card-wrapper">
+        <div class="card">
+          {/* <!-- card left --> */}
+          <div class="product-imgs">
+            <div class="img-display">
+              <div class="img-showcase">
+                <img src={`${URl}${book?.image}`} alt="" />
+              </div>
+            </div>
+          </div>
+          {/* <!-- card right --> */}
+          <div class="product-content">
+            <h2 class="product-title">{book?.title}</h2>
+
+            <div class="product-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.7(21)</span>
+            </div>
+
+            <div class="product-price">
+              <p class="last-price">
+                Old Price: <span>${book?.market_price}</span>
+              </p>
+              <p class="new-price">
+                New Price:
+                <span>
+                  ${book?.selling_Price} ({book?.discount_percent}%)
+                </span>
+              </p>
+            </div>
+
+            <div class="product-detail">
+              <h2>about this item: </h2>
+              <p>{book?.description}</p>
+
+              <ul>
+                <li>
+                  Color: <span>Black</span>
+                </li>
+                <li>
+                  Available: <span>in stock</span>
+                </li>
+                <li>
+                  Category: <span>Shoes</span>
+                </li>
+                <li>
+                  Shipping Area: <span>All over the world</span>
+                </li>
+                <li>
+                  Shipping Fee: <span>Free</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="purchase-info">
+              <input type="number" min="0" value="1" />
+              <button type="button" class="btn-details">
+                Add to Cart <i class="fas fa-shopping-cart"></i>
+              </button>
+              <button type="button" class="btn-details">
+                Compare
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-     
     </div>
-    {/* <!-- card right --> */}
-    <div class = "product-content">
-      <h2 class = "product-title">nike shoes</h2>
-      <a href = "#" class = "product-link">visit nike store</a>
-      <div class = "product-rating">
-        <i class = "fas fa-star"></i>
-        <i class = "fas fa-star"></i>
-        <i class = "fas fa-star"></i>
-        <i class = "fas fa-star"></i>
-        <i class = "fas fa-star-half-alt"></i>
-        <span>4.7(21)</span>
-      </div>
-
-      <div class = "product-price">
-        <p class = "last-price">Old Price: <span>$257.00</span></p>
-        <p class = "new-price">New Price: <span>$249.00 (5%)</span></p>
-      </div>
-
-      <div class = "product-detail">
-        <h2>about this item: </h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
-        <ul>
-          <li>Color: <span>Black</span></li>
-          <li>Available: <span>in stock</span></li>
-          <li>Category: <span>Shoes</span></li>
-          <li>Shipping Area: <span>All over the world</span></li>
-          <li>Shipping Fee: <span>Free</span></li>
-        </ul>
-      </div>
-
-      <div class = "purchase-info">
-        <input type = "number" min = "0" value = "1" />
-        <button type = "button" class = "btn-details">
-          Add to Cart <i class = "fas fa-shopping-cart"></i>
-        </button>
-        <button type = "button" class = "btn-details">Compare</button>
-      </div>
-
-    
-    </div>
-  </div>
-</div>
-        </div>
-    );
+  );
 };
 
 export default BookDetails;
