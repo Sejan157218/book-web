@@ -32,7 +32,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/sentotp" element={<SentOTP />} />
-            <Route path="/confirmotp" element={<ConfirmOTP />} />
+            <Route path="/confirmotp/:email" element={<ConfirmOTP />} />
           </Routes>
           <Footer />
         </Router>

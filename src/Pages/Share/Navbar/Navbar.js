@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -11,10 +12,14 @@ import useAuth from "../../../hook/useAuth";
 
 
 const NavbarCom = () => {
-  const { author, category } = useAuth();
+  const { author, category,user,setUser ,URl,cartBook} = useAuth();
+
   const location = useLocation();
   const destination = location?.state?.from || "/";
   const navigate = useNavigate();
+
+  const totalQuantity=cartBook.reduce((sumofquantity, current) => sumofquantity + current.quantity, 0);
+
 
   const handlerToOnChange = (e) => {
     navigate(`search/${e.target.value}/`);
@@ -24,6 +29,36 @@ const NavbarCom = () => {
    
   };
   }
+
+const handlerToLogOut=()=>{
+
+  const config = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `token ${user.token}`,
+    },
+    body: {
+      'Authorization': `token ${user.token}`,
+  },
+   
+}
+  axios
+      .get(`${URl}/auth/logout/`,config)
+      .then(function (response) {
+        if (response.data.msg) {
+          setUser({})
+          localStorage.removeItem('user')
+        }
+      })
+      .catch(function (error) {
+        // console.log(error.response.data.error );
+        // console.log(error.response.data.email);
+        console.log(error);
+        
+      });
+}
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -63,9 +98,11 @@ const NavbarCom = () => {
             </Nav>
             <Nav>
               <Nav.Link href="#action2">
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i class="fa-solid fa-cart-shopping"></i> {totalQuantity}
               </Nav.Link>
-              <Link to='/login'>Login</Link>
+              {
+                user?.email? <button onClick={handlerToLogOut}>Log Out</button>: <Link to='/login'>Login</Link>
+              }
             </Nav>
           </Navbar.Collapse>
         </Container>

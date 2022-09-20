@@ -39,7 +39,6 @@
 
 .create-account-item,
 .have-account-item {
-  position: absolute;
   bottom: 30px;
 }
 .create-account-item a,
@@ -64,8 +63,6 @@
   margin: 0;
   padding: 0;
 }
-
-
 
 .login-signup-cards {
   display: flex;
@@ -190,6 +187,34 @@
   .signup-card-items
   .form-items
   input[type="email"] {
+  padding: 5px 20px;
+  width: calc(100% - 125px);
+  height: 40px;
+  background-color: #f3f4f6;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  outline: none;
+}
+.login-signup-cards
+  .signup-card
+  .signup-card-items
+  .form-items
+  input[type="text"] {
+  padding: 5px 20px;
+  width: calc(100% - 125px);
+  height: 40px;
+  background-color: #f3f4f6;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  outline: none;
+}
+.login-signup-cards
+  .signup-card
+  .signup-card-items
+  .form-items
+  input[type="submit"] {
   padding: 5px 20px;
   width: calc(100% - 125px);
   height: 40px;

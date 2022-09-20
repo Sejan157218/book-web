@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
 
+
+
 const BookDetails = () => {
   const [book, setBook] = useState({});
-  const { URl } = useAuth();
+  const { URl ,handlerToSetCart,cartMessage} = useAuth();
   const { id } = useParams();
   useEffect(() => {
     fetch(`${URl}/details/${id}/`)
       .then((res) => res.json())
       .then((data) => setBook(data));
   }, [URl, id]);
-  console.log("id", id);
-  console.log("book", book);
+
   return (
     <div className="my-5">
       <div class="card-wrapper">
@@ -75,13 +76,16 @@ const BookDetails = () => {
 
             <div class="purchase-info">
               <input type="number" min="0" value="1" />
-              <button type="button" class="btn-details">
+              <button onClick={()=>handlerToSetCart(book)} type="button" class="btn-details">
                 Add to Cart <i class="fas fa-shopping-cart"></i>
               </button>
               <button type="button" class="btn-details">
                 Compare
               </button>
             </div>
+            {
+              cartMessage? <p>{cartMessage}</p>:""
+            }
           </div>
         </div>
       </div>
