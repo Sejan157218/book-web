@@ -1,9 +1,40 @@
+import axios from "axios";
 import React from "react";
+import useAuth from "../../hook/useAuth";
 
 const Cart = () => {
+  const {URl,user,cartBook,handleToIncrease,handleToDecrease,handlerToDelete,totalQuantity,totalPrice}=useAuth()
+const handlerToOrder=()=>{
+if (cartBook.length>0){
+  const orderBook={
+    user : user.email,
+    book : cartBook,
+    totalPrice : totalPrice +5,
+  }
+  axios
+      .post(`${URl}/order/`, orderBook)
+      .then(function (response) {
+        console.log(response);
+        // if (response.data.payload) {
+        //   handlerToSetUser(response.data.payload)
+        //   setError("user Login successfully");
+        //   navigate(`/`)
+        // }
+      })
+      .catch(function (error) {
+        // console.log(error.response.data.error );
+        // console.log(error.response.data.email);
+        console.log(error);
+        if (error.response.data.error) {
+          // setError(error.response.data.error); 
+        } 
+      });
+}
+}
+
   return (
     <div>
-      <div className="card my-5">
+      <div className="container my-5">
         <div className="row">
           <div className="col-md-8 cart">
             <div className="title">
@@ -14,34 +45,41 @@ const Cart = () => {
                   </h4>
                 </div>
                 <div className="col align-self-center text-right text-muted">
-                  3 items
+                  {cartBook.length} items
                 </div>
               </div>
             </div>
-            <div className="row border-top border-bottom">
+           {
+            cartBook.map(cart=>(
+              <div className="row border-top border-bottom">
               <div className="row main align-items-center">
                 <div className="col-2">
                   <img
                     className="img-fluid"
-                    src="https://i.imgur.com/1GrakTl.jpg"
+                    src={`${URl}${cart.image}`}
                   />
                 </div>
                 <div className="col">
-                  <div className="row text-muted">Shirt</div>
-                  <div className="row">Cotton T-shirt</div>
+                  <div className="row text-muted"> {cart?.category.title} </div>
+                  <div className="row">{cart?.title}</div>
                 </div>
                 <div className="col cart-a">
-                  <a href="#">-</a>
-                  <a href="#" className="border">
-                    1
+                <button className="p-2" onClick={()=>handleToDecrease(cart.id)}>-</button>
+                  <a href="#" className="border mx-2">
+                  {cart?.quantity}
                   </a>
-                  <a href="#">+</a>
+                  <button className="p-2" onClick={()=>handleToIncrease(cart.id)}>+</button>
                 </div>
                 <div className="col">
-                  $ 44.00 <span className="close">&#10005;</span>
+                  $ {cart?.selling_Price} <span className="close">&#10005;</span>  {cart?.quantity} = $ {cart?.selling_Price * cart?.quantity}
+                </div>
+                <div className="col-1 text-center">
+                <span onClick={()=>handlerToDelete(cart.id)} className="close">&#10005;</span> 
                 </div>
               </div>
             </div>
+            ))
+           }
 
             <div className="back-to-shop">
               <a href="#">&leftarrow;</a>
@@ -56,8 +94,8 @@ const Cart = () => {
             </div>
             <hr />
             <div className="row">
-              <div className="col ps-0">ITEMS 3</div>
-              <div className="col text-right">$ 132.00</div>
+              <div className="col ps-0">ITEMS {totalQuantity}</div>
+              <div className="col text-right">$ {totalPrice}</div>
             </div>
             <form>
               <p>SHIPPING</p>
@@ -72,26 +110,12 @@ const Cart = () => {
             {/* <div className="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;"> */}
             <div className="row">
               <div className="col">TOTAL PRICE</div>
-              <div className="col text-right">$; 137.00</div>
+              <div className="col text-right">$; {totalPrice ? totalPrice+5 : 0}</div>
             </div>
-            <button className="btn">CHECKOUT</button>
+            <button onClick={handlerToOrder} className="btn">Order</button>
           </div>
         </div>
       </div>
-      <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=muhammadpur%20dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br/><style></style></div></div>
-
-    <div>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/uDw7ArEVYSY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-
-
-    <div>
-    <iframe src="https://victormochere.com"  width="560" height="315"></iframe>
-    </div>
-
-    <div>
-    <embed type="text/html" src="https://theuselessweb.com/" width="800" height="500"/>
-    </div>
     </div>
 
 

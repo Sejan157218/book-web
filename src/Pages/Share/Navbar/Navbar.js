@@ -12,13 +12,13 @@ import useAuth from "../../../hook/useAuth";
 
 
 const NavbarCom = () => {
-  const { author, category,user,setUser ,URl,cartBook} = useAuth();
+  const { author, category,user,setUser ,URl,totalQuantity} = useAuth();
 
   const location = useLocation();
   const destination = location?.state?.from || "/";
   const navigate = useNavigate();
 
-  const totalQuantity=cartBook.reduce((sumofquantity, current) => sumofquantity + current.quantity, 0);
+  
 
 
   const handlerToOnChange = (e) => {
