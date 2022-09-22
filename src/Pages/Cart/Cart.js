@@ -1,9 +1,10 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../../hook/useAuth";
 
 const Cart = () => {
-  const {URl,user,cartBook,handleToIncrease,handleToDecrease,handlerToDelete,totalQuantity,totalPrice}=useAuth()
+const {URl,user,cartBook,setCartBook,handleToIncrease,handleToDecrease,handlerToDelete,totalQuantity,totalPrice}=useAuth()
+const [error,setError]=useState('')
 const handlerToOrder=()=>{
 if (cartBook.length>0){
   const orderBook={
@@ -15,11 +16,12 @@ if (cartBook.length>0){
       .post(`${URl}/order/`, orderBook)
       .then(function (response) {
         console.log(response);
-        // if (response.data.payload) {
-        //   handlerToSetUser(response.data.payload)
-        //   setError("user Login successfully");
-        //   navigate(`/`)
-        // }
+        if (response.data.msg) {
+          setCartBook([])
+          localStorage.removeItem('cart')
+          setError(response.data.msg);
+       
+        }
       })
       .catch(function (error) {
         // console.log(error.response.data.error );
@@ -113,6 +115,9 @@ if (cartBook.length>0){
               <div className="col text-right">$; {totalPrice ? totalPrice+5 : 0}</div>
             </div>
             <button onClick={handlerToOrder} className="btn">Order</button>
+            {
+              error? <p>{error}</p> : ""
+            }
           </div>
         </div>
       </div>

@@ -1,0 +1,20 @@
+.navbar-cart a{
+    color: #FFF;
+    text-decoration: none;
+    margin: 5px;
+}
+
+.navbar-2 a{
+    text-decoration: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #6c757d;
+   
+}
+.btn-logout{
+    background-color: rgba(14, 208, 133, 0.77);
+    border: none;
+    padding: 0px 15px;
+    border-radius: 3px;
+    color: #FFF;;
+}

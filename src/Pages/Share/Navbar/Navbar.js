@@ -8,6 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hook/useAuth";
+import "./Navbar.css";
 
 
 
@@ -96,12 +97,19 @@ const handlerToLogOut=()=>{
                 </div>
               </Form>
             </Nav>
-            <Nav>
-              <Nav.Link href="#action2">
+            <Nav className="navbar-cart">
+           <Link to='/cart'>   
                 <i class="fa-solid fa-cart-shopping"></i> {totalQuantity}
-              </Nav.Link>
+              </Link>
+          
               {
-                user?.email? <button onClick={handlerToLogOut}>Log Out</button>: <Link to='/login'>Login</Link>
+                user?.email?<>    
+                <Link  to={`/myorder`}>   
+                My Order
+               </Link>
+                <button className="btn-logout" onClick={handlerToLogOut}>Log Out</button>
+                 </>
+                : <Link to='/login'>Login</Link>
               }
             </Nav>
           </Navbar.Collapse>
@@ -113,7 +121,7 @@ const handlerToLogOut=()=>{
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
               <Nav
-                className="me-auto my-2 my-lg-0"
+                className="me-auto my-2 my-lg-0 navbar-2"
                 style={{ maxHeight: "100px" }}
                 navbarScroll
               >

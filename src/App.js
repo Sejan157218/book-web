@@ -14,7 +14,8 @@ import Login from "./Pages/Share/Login/Login";
 import SignUp from "./Pages/Share/SignUp/SignUp";
 import SentOTP from "./Pages/Share/SentOTP/SentOTP";
 import ConfirmOTP from "./Pages/Share/ConfirmOTP/ConfirmOTP";
-
+import MyOrder from "./Pages/MyOrder/MyOrder";
+import PrivateRoute from "./Pages/Share/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -24,7 +25,6 @@ function App() {
           <NavbarCom></NavbarCom>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
             <Route path="/bookdetails/:id" element={<BookDetails />} />
             <Route path="/search/:slug/:title" element={<SearchView />} />
             <Route path="/search/:searchValue/" element={<SearchWithValue />} />
@@ -33,6 +33,22 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/sentotp" element={<SentOTP />} />
             <Route path="/confirmotp/:email" element={<ConfirmOTP />} />
+            <Route
+              path="/cart"
+              element={
+                <PrivateRoute>
+                  <Cart />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/myorder"
+              element={
+                <PrivateRoute>
+                  <MyOrder />
+                </PrivateRoute>
+              }
+            />
           </Routes>
           <Footer />
         </Router>

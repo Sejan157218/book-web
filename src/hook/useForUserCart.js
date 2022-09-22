@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react';
 
 const useForUserCart = () => {
+    const [isLoading,setIsLoading]=useState(true)
     const [user,setUser]=useState({})
     const [sentOtpUser,setSentOtpUser]=useState({})
     const [cartBook,setCartBook]=useState([])
@@ -10,15 +11,20 @@ const useForUserCart = () => {
 
     // user
     const handlerToSetUser=(userData)=>{
+        setIsLoading(true)
         setUser(userData)
         localStorage.setItem('user',JSON.stringify(userData))
+        setIsLoading(false)
     }
     // user
     useEffect(() => {
+        setIsLoading(true)
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {
             setUser(user);
+            setIsLoading(false)
             }
+        setIsLoading(false)    
       }, []);
 
 
@@ -96,11 +102,13 @@ const useForUserCart = () => {
         handlerToSetCart,
         cartMessage,
         cartBook,
+        setCartBook,
         handleToIncrease,
         handleToDecrease,
         handlerToDelete,
         totalQuantity,
         totalPrice,
+        isLoading,
 
     }
 };
